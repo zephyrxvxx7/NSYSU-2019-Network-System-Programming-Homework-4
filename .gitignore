@@ -1,0 +1,15 @@
+# Ignore all executable files
+*
+!*.*
+!*/
+
+# Ignore all objects files
+*.o
+
+.vscode/
+.devcontainer/
+
+# Unignore all needed files
+!123
+!dict
+!makefile

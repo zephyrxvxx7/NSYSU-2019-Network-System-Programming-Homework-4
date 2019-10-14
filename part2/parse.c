@@ -46,7 +46,6 @@ char ** parse(char *line) {
 	 */
 
     do {
-        //printf("[%d] : %s\n", count, token);
         newArgv[count] = malloc(sizeof(char) * strlen(token));
         strcpy(newArgv[count], token);
 
@@ -81,8 +80,8 @@ void free_argv(char **oldArgv) {
 	 */
 
     while (oldArgv[i] != NULL) {
-        free(oldArgv[i]);
         oldArgv[i] = NULL;
+        free(oldArgv[i]);
         i++;
     }
     free(oldArgv);

@@ -2,8 +2,9 @@
  *  pipe_present.c :  check for |
  */
 
-#include <stdio.h>
 #include "shell.h"
+#include <stdio.h>
+#include <string.h>
 
 /*
  * Return index offset into argv of where "|" is,
@@ -15,11 +16,20 @@ int pipe_present(char ** myCurrentArgv) {
 
   	/* Search through myCurrentArgv for a match on "|". */
 
-  	if /* At the beginning or at the end. */ {
-    	return -1;
+    while (myCurrentArgv[index] != NULL) {
+        if(strcmp(myCurrentArgv[index], "|") == 0)
+            break;
+        index++;
+    }
+    
 
-  	} else if /* Off the end. */ {
+    	
+
+  	if (myCurrentArgv[index] == NULL) {
     	return 0;
+        
+  	} else if (myCurrentArgv[index + 1] == NULL || index == 0) {
+        return -1;  
 
   	} else {
     	/* In the middle. */

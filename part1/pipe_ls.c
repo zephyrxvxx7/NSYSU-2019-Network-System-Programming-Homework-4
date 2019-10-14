@@ -26,8 +26,8 @@ int main()
     /* child */
     case 0:
         /* Close read side, won't use it */
-        close(pipefd[0]);
-        dup2(pipefd[1], STDOUT_FILENO);
+        close(pipefd[1]);
+        dup2(pipefd[0], STDIN_FILENO);
 
         execlp("ls", "ls", "-lh", NULL);
         perror("exec ls failed");
@@ -42,10 +42,10 @@ int main()
     char buffer[BSIZE];
 
     /* Close write side, won't use it */
-    close(pipefd[1]);
+    close(pipefd[0]);
 
     /* print output from CGI */
-    while ((len = read(pipefd[0], buffer, BSIZE)) > 0) {
+    while ((len = read(pipefd[1], buffer, BSIZE)) > 0) {
         buffer[len] = '\0';
         printf("%s\n", buffer);
     }

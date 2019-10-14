@@ -30,9 +30,8 @@ int redirect_out(char ** myArgv) {
         i++;
     }
 
-    i++;
   	if (myArgv[i]) {	/* found ">" in vector. */
-    
+        
     	/* 1) Open file.
     	 * 2) Redirect to use it for output.
     	 * 3) Cleanup / close unneeded file descriptors.
@@ -40,26 +39,36 @@ int redirect_out(char ** myArgv) {
 		 *
     	 * Fill in code. */
         
-
-        int out = open(myArgv[i], O_RDWR|O_CREAT, 0600);
-        if (-1 == out) {
+        if(freopen(myArgv[i + 1], "w", stdout) == NULL){
             errno = ENOENT;
-            return -1; 
-        }
-
-        int save_out = dup(STDOUT_FILENO);
-
-        if (-1 == dup2(out, STDOUT_FILENO)) {
-            perror("cannot redirect stdout");
             return -1;
         }
 
-        puts("doing an ls or something now");
+        /* Old code */
 
-        fflush(stdout);
-        close(out);
-        dup2(save_out, STDOUT_FILENO);
-        close(save_out);
+        // int out = open(myArgv[i], O_RDWR|O_CREAT, 0600);
+        // if (-1 == out) {
+        //     errno = ENOENT;
+        //     return -1; 
+        // }
+
+        // int save_out = dup(STDOUT_FILENO);
+
+        // if (-1 == dup2(out, STDOUT_FILENO)) {
+        //     perror("cannot redirect stdout");
+        //     return -1;
+        // }
+
+        myArgv[i] = NULL;
+        myArgv[i + 1] = NULL;
+        free(myArgv[i + 1]);
+
+        /* unused */
+
+        // fflush(stdout);
+        // close(out);
+        // dup2(save_out, STDOUT_FILENO);
+        // close(save_out);
 
   	}
     else {

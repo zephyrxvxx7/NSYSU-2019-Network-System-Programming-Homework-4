@@ -1,4 +1,4 @@
-# [2019 Network System Programming Homework 4 ]
+# 2019 Network System Programming Homework 4
 
 This homework focuses on system programming and pipe.
 
