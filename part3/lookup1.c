@@ -4,6 +4,7 @@
  *	         as resource.
  */
 #include <string.h>
+#include <stdlib.h>
 #include "dict.h"
 
 int lookup(Dictrec * sought, const char * resource) {
@@ -16,15 +17,34 @@ int lookup(Dictrec * sought, const char * resource) {
 		/* open up the file
 		 *
 		 * Fill in code. */
+        if ((in = fopen(resource, "r")) == NULL){DIE(resource);}
 	}
+    // strcat(sought->word, "\n");
 
 	/* read from top of file, looking for match
 	 *
 	 * Fill in code. */
-	rewind(in);
-	while(________) {
+
+    strcpy(sought->text, "");
+    rewind(in);
+	while(!feof(in)) {
 		/* Fill in code. */
-		return FOUND;
+        
+        if(fgets(dr.word, WORD, in) == NULL)
+            break;
+        
+        dr.word[strlen(dr.word) - 1] = '\0';
+        
+        if (strcmp(sought->word, dr.word) == 0){
+            fseek(in, WORD - strlen(dr.word) - 1, SEEK_CUR);
+
+            while(fgets(dr.word, TEXT, in) && strcmp(dr.word, "") != 0)
+                strcat(sought->text, dr.word);
+            sought->text[strlen(sought->text) - 1] = '\0';
+
+		    return FOUND;
+        }
+        fseek(in, 511 - strlen(dr.word), SEEK_CUR);
 	}
 
 	return NOTFOUND;

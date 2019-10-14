@@ -43,17 +43,31 @@ int main(int argc, char **argv) {
 		 * in both fields with nulls.
 		 */
 
+
 		/* Read word and put in record.  Truncate at the end of the "word" field.
 		 *
 		 * Fill in code. */
+
+        strcpy(dr.text, "");
+
+        fgets(line, BIGLINE, in);
+        strcpy(dr.word, line);
+        
 
 		/* Read definition, line by line, and put in record.
 		 *
 		 * Fill in code. */
 
+        while(fgets(line, BIGLINE, in) && strcmp(line, "\n") != 0){
+            strcat(dr.text, line);
+        }
+
 		/* Write record out to file.
 		 *
 		 * Fill in code. */
+
+        if(strcmp(dr.word, "\n") != 0 && strcmp(dr.word, "\n") != 0)
+            fwrite(&dr, sizeof(Dictrec), 1, out);
 	}
 
 	fclose(in);
